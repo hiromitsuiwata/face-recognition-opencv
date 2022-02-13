@@ -35,7 +35,6 @@ def detect_faces_for_directory(input_dir, output_dir):
 def scene_detect(input_dir, output_dir):
     input_files = glob.glob(os.path.join(input_dir, "*"))
     for input_file in input_files:
-        print("Detecting scenes in {}".format(input_file))
         basename = os.path.basename(input_file)
         if basename.endswith(".mp4"):
             print("Detecting scenes in {}".format(input_file))
@@ -55,11 +54,18 @@ def scene_detect(input_dir, output_dir):
                 ffmpeg.input(input_file, ss=scene[0].get_seconds()).output(output_file, vframes=1).run(overwrite_output=True)
                 i += 1
 
+def clear_output(dir):
+    files = glob.glob(os.path.join(dir, "*"))
+    for file in files:
+        os.remove(file)
+
 def main():
     input_video_dir = ".\\data\\1.input_video"
     snapshot_dir = ".\\data\\2.snapshot"
     facedetect_dir = ".\\data\\3.facedetect"
 
+    clear_output(snapshot_dir)
+    clear_output(facedetect_dir)
     scene_detect(input_video_dir, snapshot_dir)
     detect_faces_for_directory(snapshot_dir, facedetect_dir)
 

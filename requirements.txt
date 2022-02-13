@@ -1,3 +1,5 @@
 opencv-contrib-python
 scenedetect[opencv]
 ffmpeg-python
+cmake
+dlib
